@@ -335,8 +335,8 @@ def search_and_extract_district(driver, cursor, conn, city, district, search_ter
     except:
         pass
     
-    print("⏳ Waiting 4 seconds for results...")
-    time.sleep(4)
+    print("⏳ Waiting 2 seconds for results...")
+    time.sleep(2)
     
 
     for i in range(5):
