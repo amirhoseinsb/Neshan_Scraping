@@ -322,14 +322,14 @@ def search_and_extract_district(driver, cursor, conn, city, district, search_ter
     
     print(f"\n🔍 Opening: {url}")
     driver.get(url)
-    print("⏳ Waiting 4 seconds for initial load...")
-    time.sleep(4)
+    print("⏳ Waiting 3 seconds for initial load...")
+    time.sleep(3)
     
 
     try:
         search_box = driver.find_element(By.CSS_SELECTOR, "input[type='search']")
         search_box.send_keys(Keys.RETURN)
-        time.sleep(1)
+        time.sleep(3)
         search_box.send_keys(Keys.RETURN)
         print(f"   Pressed Enter to load results...")
     except:
