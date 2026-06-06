@@ -315,7 +315,6 @@ def search_and_extract_district(driver, cursor, conn, city, district, search_ter
     """Search for a specific district and extract all data"""
     
     # Build search query
-    # search_query = f"{search_term} {district}"
     search_query = f"{search_term} {district} {city}"
     encoded_query = urllib.parse.quote(search_query)
     url = f"https://neshan.org/maps/search/{encoded_query}"
@@ -325,16 +324,28 @@ def search_and_extract_district(driver, cursor, conn, city, district, search_ter
     print("⏳ Waiting 3 seconds for initial load...")
     time.sleep(3)
     
-
-    try:
-        search_box = driver.find_element(By.CSS_SELECTOR, "input[type='search']")
-        search_box.send_keys(Keys.RETURN)
-        time.sleep(3)
-        search_box.send_keys(Keys.RETURN)
-        print(f"   Pressed Enter to load results...")
-    except:
-        pass
-    
+    max_attempts = 2
+    for attempt in range(max_attempts):
+        try:
+            search_box = driver.find_element(By.CSS_SELECTOR, "input[type='search']")
+            search_box.send_keys(Keys.RETURN)
+            print(f"   Pressed Enter to load results (attempt {attempt + 1})...")
+            time.sleep(2)
+        except:
+            pass
+        
+        if attempt == 0:
+            try:
+                no_result_div = driver.find_element(By.CSS_SELECTOR, "div.wtfezuH span")
+                if "هیچ نتیجه‌ای" in no_result_div.text or "یافت نشد" in no_result_div.text:
+                    print("   ⚠️ 'No results' detected. Retrying one more time...")
+                    continue 
+                else:
+                    break
+            except:
+                print("   ✅ Results loaded successfully.")
+                break
+        
     print("⏳ Waiting 2 seconds for results...")
     time.sleep(2)
     
