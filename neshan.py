@@ -329,6 +329,8 @@ def search_and_extract_district(driver, cursor, conn, city, district, search_ter
     try:
         search_box = driver.find_element(By.CSS_SELECTOR, "input[type='search']")
         search_box.send_keys(Keys.RETURN)
+        time.sleep(1)
+        search_box.send_keys(Keys.RETURN)
         print(f"   Pressed Enter to load results...")
     except:
         pass
@@ -384,7 +386,7 @@ def search_and_extract_district(driver, cursor, conn, city, district, search_ter
             driver.execute_script("arguments[0].click();", popup)
             
             # Wait for card to open
-            time.sleep(5)
+            time.sleep(4)
             
             # Extract name from h1 tag
             name = ""
