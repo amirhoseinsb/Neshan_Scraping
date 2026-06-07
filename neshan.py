@@ -338,6 +338,9 @@ def search_and_extract_district(driver, cursor, conn, city, district, search_ter
             try:
                 no_result_div = driver.find_element(By.CSS_SELECTOR, "div.wtfezuH span")
                 if "هیچ نتیجه‌ای" in no_result_div.text or "یافت نشد" in no_result_div.text:
+                    driver.refresh()
+                    time.sleep(2)
+                    search_box.send_keys(Keys.RETURN)
                     print("   ⚠️ 'No results' detected. Retrying one more time...")
                     continue 
                 else:
